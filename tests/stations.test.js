@@ -69,3 +69,4 @@ describe('GET /api/stations/:id', () => {
         expect(response.body).toHaveProperty('message', 'Station not found');
     });
 });
+

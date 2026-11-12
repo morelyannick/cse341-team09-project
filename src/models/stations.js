@@ -7,3 +7,4 @@ export async function getAllStations() {
 export async function getStationById(id) {
     return getDb().collection('stations').findOne({ id });
 }
+
