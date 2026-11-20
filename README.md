@@ -59,8 +59,8 @@ This repository is set up as a **GitHub template**. Use the template feature to 
    cd YOUR-REPO-NAME
    ```
 5. Install dependencies: `npm install`
-6. Copy `.env.example` to `.env` and set `MONGODB_URI` (and optionally `MONGODB_DB_NAME`) for your MongoDB instance.
-7. Import the starter data with `npm run db:import`. This replaces the starter collections and clears any confirmations in that database.
+6. Copy `.env.example` to `.env` and set `MONGODB_URI` (and optionally `MONGODB_DB_NAME`) for your MongoDB instance. The npm scripts use `.env.example` if `.env` is absent, but a MongoDB instance must still be reachable at the configured URI.
+7. Import the starter data with `npm run db:import`. This replaces the starter collections and clears any bookings in that database.
 8. Run the automated tests with `npm test`. Tests use a temporary local database and do not change the database in your `.env` file.
 9. Start the development server: `npm run dev`
 
@@ -73,6 +73,8 @@ The application and automated tests share the database initialization function i
 Vitest starts the temporary database once for the complete test run. Before each individual test, the setup clears that temporary database and restores the starter data. This means each test begins with the same data, and test changes cannot reach the database configured in `.env`.
 
 See `tests/trains.test.js` for example endpoint tests that use Supertest to send requests to the real `/api/trains` route.
+
+The OpenAPI specification for the trips, schedules, and bookings endpoints is available at `/api/openapi.json`.
 
 This project simulates realistic work situations requiring reverse engineering, refactoring, debugging, or feature extension.
 
@@ -91,7 +93,7 @@ Forking maintains the connection to the original repository and allows you to co
 - **Backend**: Node.js with Express framework
 - **Templating**: EJS
 - **Styling**: Modern nested CSS with custom properties
-- **Database**: MongoDB, using the official MongoDB Node.js driver
+- **Database**: MongoDB with Mongoose models and the official MongoDB Node.js driver
 - **Testing**: Vitest, Supertest, and MongoDB Memory Server
 
 ## Skills You'll Develop
