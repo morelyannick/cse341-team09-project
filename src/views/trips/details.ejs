@@ -46,15 +46,31 @@
         </div>
 
         <div class="route-stations">
-            <h2>Trip</h2>
+            <h2>Trip Stations</h2>
             <div class="stations">
                 <div class="station">
-                    <span class="station-label">Start</span>
-                    <span class="station-name"><%= details.startStation.charAt(0).toUpperCase() + details.startStation.slice(1) %></span>
+                    <div class="station-header-row">
+                        <div>
+                            <span class="station-label">Start</span>
+                            <span class="station-name"><%= details.startStation.charAt(0).toUpperCase() + details.startStation.slice(1) %></span>
+                        </div>
+                        <button type="button" class="station-toggle-btn" data-station-id="<%= details.startStation %>" aria-expanded="false">
+                            ℹ️ View Station Details
+                        </button>
+                    </div>
+                    <div class="station-popup-panel" id="station-info-<%= details.startStation %>" hidden></div>
                 </div>
                 <div class="station">
-                    <span class="station-label">End</span>
-                    <span class="station-name"><%= details.endStation.charAt(0).toUpperCase() + details.endStation.slice(1) %></span>
+                    <div class="station-header-row">
+                        <div>
+                            <span class="station-label">End</span>
+                            <span class="station-name"><%= details.endStation.charAt(0).toUpperCase() + details.endStation.slice(1) %></span>
+                        </div>
+                        <button type="button" class="station-toggle-btn" data-station-id="<%= details.endStation %>" aria-expanded="false">
+                            ℹ️ View Station Details
+                        </button>
+                    </div>
+                    <div class="station-popup-panel" id="station-info-<%= details.endStation %>" hidden></div>
                 </div>
             </div>
         </div>

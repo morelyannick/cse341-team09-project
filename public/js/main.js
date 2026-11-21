@@ -88,8 +88,61 @@ const hookTrainsCatalog = async () => {
     }
 };
 
+const hookStationDetails = () => {
+    const buttons = document.querySelectorAll('.station-toggle-btn');
+    if (!buttons || buttons.length === 0) {
+        return;
+    }
+
+    buttons.forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            const stationId = btn.dataset.stationId;
+            const panel = document.getElementById(`station-info-${stationId}`);
+            if (!panel) return;
+
+            if (!panel.hidden) {
+                panel.hidden = true;
+                btn.setAttribute('aria-expanded', 'false');
+                btn.textContent = 'ℹ️ View Station Details';
+                return;
+            }
+
+            panel.hidden = false;
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = '✕ Close Station Details';
+            panel.innerHTML = '<p class="station-loading">Loading station details...</p>';
+
+            try {
+                const response = await fetch(`/api/stations/${stationId}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to load station (${response.status})`);
+                }
+
+                const data = await response.json();
+                const station = data.station || data;
+
+                const facilitiesHtml = station.facilities && station.facilities.length > 0
+                    ? `<div class="station-facilities"><strong>Facilities:</strong> ${station.facilities.map((f) => `<span class="facility-pill">${f}</span>`).join(' ')}</div>`
+                    : '';
+
+                panel.innerHTML = `
+                    <div class="station-card-content">
+                        <h3>${station.name}</h3>
+                        <p><strong>Prefecture:</strong> ${station.prefecture} | <strong>Region:</strong> ${station.region}</p>
+                        ${station.description ? `<p class="station-desc">${station.description}</p>` : ''}
+                        ${facilitiesHtml}
+                    </div>
+                `;
+            } catch (err) {
+                panel.innerHTML = '<p class="station-error">Unable to load station information at this time.</p>';
+            }
+        });
+    });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     hookRegionSorter();
     hookSeasonSorter();
     hookTrainsCatalog();
+    hookStationDetails();
 });
