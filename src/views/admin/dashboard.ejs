@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<section class="admin-dashboard-container" style="max-width: 800px; padding: 20px 0;">
+    <h1>Admin Dashboard</h1>
+    <p style="font-size: 18px; color: #2d5a4c; font-weight: 500;">Welcome to the Admin Dashboard</p>
+
+    <div class="admin-user-card" style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-left: 4px solid #2d5a4c; padding: 16px; border-radius: 4px; margin: 20px 0;">
+        <p><strong>Signed in as:</strong> <%= user ? user.name : 'Administrator' %> (<%= user ? user.email : '' %>)</p>
+        <p><strong>Role:</strong> <span style="background-color: #2d5a4c; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">Admin</span></p>
+    </div>
+
+    <div class="admin-quick-links" style="margin-top: 24px;">
+        <h2>Administrative Tools</h2>
+        <ul style="line-height: 2;">
+            <li><a href="/trips">Manage Scenic Trips</a></li>
+            <li><a href="/trains">View Trains Catalog</a></li>
+            <li><a href="/logout">Sign Out</a></li>
+        </ul>
+    </div>
+</section>
+<%- include('../partials/footer') %>

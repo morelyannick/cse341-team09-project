@@ -38,6 +38,15 @@
                     <li><a href="/trips">Trips</a></li>
                     <li><a href="/trains">Trains</a></li>
                     <li><a href="/about">About</a></li>
+                    <% if (locals.user) { %>
+                        <% if (locals.user.role === 'admin') { %>
+                            <li><a href="/admin/dashboard">Admin</a></li>
+                        <% } %>
+                        <li><a href="/logout">Logout (<%= locals.user.name %>)</a></li>
+                    <% } else { %>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    <% } %>
                     <li><a href="/404">404</a></li>
                     <li><a href="/500">500</a></li>
                 </ul>
