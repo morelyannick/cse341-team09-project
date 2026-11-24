@@ -68,35 +68,21 @@
             </div>
         </div>
 
-        <% if (details.schedules && details.schedules.length > 0) { %>
         <div class="route-schedules">
             <h2>Available Schedules</h2>
-            <div class="schedules-grid">
-                <% details.schedules.forEach(function(schedule) { %>
-                <div class="schedule-card">
-                    <div class="schedule-times">
-                        <div class="time-block">
-                            <span class="time-label">Departs</span>
-                            <span class="time-value"><%= schedule.departureTime %></span>
-                        </div>
-                        <span class="time-arrow">→</span>
-                        <div class="time-block">
-                            <span class="time-label">Arrives</span>
-                            <span class="time-value"><%= schedule.arrivalTime %></span>
-                        </div>
-                    </div>
-                    <div class="schedule-days">
-                        <% schedule.daysOfWeek.forEach(function(day) { %>
-                        <span class="day-badge"><%= day.substring(0, 3) %></span>
-                        <% }); %>
-                    </div>
-                    <a href="/trips/booking/<%= schedule.id %>" class="book-btn">Book Now</a>
-                </div>
+            <label for="schedule-month">Month</label>
+            <select id="schedule-month" aria-label="Select a month to view schedules">
+                <% ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].forEach(function(month, index) { %>
+                <option value="<%= index + 1 %>"><%= month %></option>
                 <% }); %>
-            </div>
+            </select>
+            <p id="schedules-loading" role="status">Loading schedules…</p>
+            <p id="schedules-error" role="alert" hidden></p>
+            <p id="schedules-empty" hidden>No schedules are available for this month.</p>
+            <div id="schedules-grid" class="schedules-grid"></div>
         </div>
-        <% } %>
     </div>
 </article>
 
+<script src="/js/trips.js" defer></script>
 <%- include('../partials/footer') %>
