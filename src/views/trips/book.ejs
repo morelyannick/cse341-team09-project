@@ -13,7 +13,8 @@
 
         <section class="ticket-selection">
             <h2 class="section-title">Select Your Ticket</h2>
-            
+            <p class="ticket-availability-status" id="ticketAvailabilityStatus" aria-live="polite"></p>
+
             <div class="ticket-options">
                 <% if (ticketOptions) { %>
                     <% ticketOptions.forEach((ticket, index) => { %>
@@ -38,6 +39,7 @@
                                 </div>
                                 
                                 <p class="ticket-description"><%= ticket.description %></p>
+                                <p class="ticket-unavailable-note" hidden>Not available on the selected day</p>
                                 
                                 <ul class="amenities-list">
                                     <% if (ticket.amenities) { %>
@@ -452,5 +454,6 @@
     }
     updateSummary();
 </script>
+<script src="/js/booking-tickets.js"></script>
 
 <%- include('../partials/footer') %>

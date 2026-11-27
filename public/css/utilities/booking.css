@@ -565,3 +565,32 @@ article.booking-page {
         }
     }
 }
+/* Ticket classes not sold on the selected day (set by public/js/booking-tickets.js) */
+.booking-page .ticket-selection .ticket-options .ticket-card.unavailable {
+    cursor: not-allowed;
+    opacity: 0.45;
+    filter: grayscale(1);
+    box-shadow: none;
+    border-color: var(--clr-border);
+}
+
+.booking-page .ticket-selection .ticket-options .ticket-card.unavailable:hover {
+    border-color: var(--clr-border);
+    box-shadow: none;
+}
+
+.booking-page .ticket-unavailable-note {
+    margin: 0;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+}
+
+.booking-page .ticket-availability-status:empty {
+    display: none;
+}
+
+.booking-page .ticket-availability-status {
+    margin: 0 0 var(--space-md) 0;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
