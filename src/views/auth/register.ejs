@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+<section class="auth-container">
+    <h1>Create an Account</h1>
+    <p>Sign up to book scenic railway journeys across Japan.</p>
+
+    <% if (error) { %>
+        <div class="auth-error-banner" style="color: #dc3545; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; border-radius: 4px; margin-bottom: 20px;">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <form action="/register" method="POST" class="auth-form" style="max-width: 480px; display: flex; flex-direction: column; gap: 16px;">
+        <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+
+        <button type="submit" style="background-color: #2d5a4c; color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 4px; cursor: pointer;">Register</button>
+    </form>
+
+    <p style="margin-top: 16px;">
+        Already have an account? <a href="/login">Sign in here</a>.
+    </p>
+</section>
+<%- include('../partials/footer') %>
