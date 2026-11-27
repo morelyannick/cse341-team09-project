@@ -88,8 +88,69 @@ const hookTrainsCatalog = async () => {
     }
 };
 
+const hookUserBookings = async () => {
+    const listEl = document.getElementById('bookings-list');
+    if (!listEl) {
+        return;
+    }
+
+    const loadingEl = document.getElementById('bookings-loading');
+    const errorEl = document.getElementById('bookings-error');
+    const emptyEl = document.getElementById('bookings-empty');
+
+    try {
+        const response = await fetch('/api/bookings/me');
+        if (!response.ok) {
+            throw new Error(`Failed to load bookings (${response.status})`);
+        }
+
+        const { bookings } = await response.json();
+        bookings.forEach((booking) => {
+            const item = document.createElement('li');
+            item.className = 'booking-card';
+
+            const heading = document.createElement('h3');
+            heading.textContent = `Booking ${booking.id}`;
+            item.appendChild(heading);
+
+            const details = document.createElement('p');
+            details.textContent = `${booking.selectedDay || 'Travel date unavailable'} · ${booking.ticketClass || 'Ticket class unavailable'}`;
+            item.appendChild(details);
+
+            const passengers = document.createElement('p');
+            passengers.textContent = `${booking.passengers?.length || 0} passenger(s)`;
+            item.appendChild(passengers);
+            listEl.appendChild(item);
+        });
+
+        emptyEl.hidden = bookings.length > 0;
+    } catch (error) {
+        errorEl.hidden = false;
+        errorEl.textContent = 'Unable to load your bookings right now. Please try again later.';
+    } finally {
+        loadingEl.hidden = true;
+    }
+};
+
+const hookPasswordVisibility = () => {
+    const passwordInput = document.getElementById('password');
+    const toggleButton = document.querySelector('.password-toggle');
+
+    if (!passwordInput || !toggleButton) {
+        return;
+    }
+
+    toggleButton.addEventListener('click', () => {
+        const isVisible = passwordInput.type === 'text';
+        passwordInput.type = isVisible ? 'password' : 'text';
+        toggleButton.textContent = isVisible ? 'Show password' : 'Hide password';
+    });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     hookRegionSorter();
     hookSeasonSorter();
     hookTrainsCatalog();
+    hookUserBookings();
+    hookPasswordVisibility();
 });

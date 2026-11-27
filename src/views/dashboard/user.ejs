@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+<section class="dashboard-page" id="user-dashboard">
+    <h1>Welcome, <%= currentUser.displayName %>!</h1>
+    <p>Here are the bookings associated with <%= currentUser.email %>.</p>
+
+    <section aria-labelledby="bookings-heading">
+        <h2 id="bookings-heading">Your bookings</h2>
+        <p id="bookings-loading" role="status">Loading your bookings…</p>
+        <p id="bookings-error" class="form-error" role="alert" hidden></p>
+        <p id="bookings-empty" hidden>You don't have any bookings yet.</p>
+        <ul id="bookings-list" class="booking-list" aria-live="polite"></ul>
+    </section>
+
+    <section aria-labelledby="admin-links-heading">
+        <h2 id="admin-links-heading">Administration</h2>
+        <ul>
+            <li><a href="/admin/bookings">Booking Admin</a></li>
+            <li><a href="/admin/users">User Admin</a></li>
+        </ul>
+    </section>
+</section>
+<%- include('../partials/footer') %>

@@ -74,6 +74,10 @@ Vitest starts the temporary database once for the complete test run. Before each
 
 See `tests/trains.test.js` for example endpoint tests that use Supertest to send requests to the real `/api/trains` route.
 
+### User accounts and dashboards
+
+Users can register and log in at `/register` and `/login`. New accounts are standard users; administrator roles must be assigned by an authorized database operator. Sessions use an HTTP-only cookie and stored, hashed session tokens. The user dashboard at `/dashboard` loads bookings whose passenger email matches the signed-in account through `/api/bookings/me`. Administrator accounts are routed to `/admin/dashboard`, where the protected booking and user administration placeholder pages are linked.
+
 This project simulates realistic work situations requiring reverse engineering, refactoring, debugging, or feature extension.
 
 ### For Contributors

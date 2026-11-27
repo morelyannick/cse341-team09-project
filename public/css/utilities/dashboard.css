@@ -1,0 +1,93 @@
+.dashboard-page,
+.account-page {
+    max-width: 760px;
+    margin: var(--space-xl) auto;
+    padding: var(--space-lg);
+    background: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.dashboard-page section {
+    margin-top: var(--space-xl);
+}
+
+.dashboard-page a,
+.account-page a {
+    color: var(--clr-primary);
+}
+
+.booking-list {
+    display: grid;
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+}
+
+.booking-card {
+    padding: var(--space-md);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+}
+
+.booking-card h3,
+.booking-card p {
+    margin: 0 0 var(--space-sm);
+}
+
+.account-form {
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.account-form input {
+    padding: var(--space-sm);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-sm);
+}
+
+.password-field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.password-field input {
+    flex: 1 1 12rem;
+    min-width: 0;
+    width: auto;
+}
+
+.password-field button {
+    white-space: nowrap;
+}
+
+.account-form button,
+.nav-button {
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    background: var(--clr-surface);
+    color: var(--clr-primary);
+    font: inherit;
+    cursor: pointer;
+}
+
+.form-error {
+    color: #a00000;
+}
+
+@media (max-width: 420px) {
+    .password-field button {
+        flex: 1 0 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    header nav .nav-button {
+        display: inline-block;
+        padding: calc(var(--space-sm) / 2) var(--space-md);
+    }
+}
