@@ -1,6 +1,7 @@
 import { getDb } from '../db/connect.js';
 import { generateBookingCode } from '../includes/helpers.js';
 import { createBooking as saveBooking, getAllBookings as findAllBookings, getBookingById as findBookingById } from '../models/bookings.js';
+import { getAllTicketClasses } from '../models/ticket-classes.js';
 
 export async function getAllBookings(req, res) {
   const bookings = await findAllBookings();
@@ -24,7 +25,7 @@ export async function bookingPage(req, res) {
     throw error;
   }
 
-  const ticketClasses = await db.collection('ticketClasses').find({}).toArray();
+  const ticketClasses = await getAllTicketClasses();
   const ticketOptions = ticketClasses.map((ticketClass) => ({
     class: ticketClass.class,
     name: ticketClass.name,

@@ -10,6 +10,7 @@
 	},
 	"scripts": {
 		"db:import": "node --env-file-if-exists=.env --env-file=.env.example src/db/import.js",
+		"db:ticket-days": "node --env-file-if-exists=.env --env-file=.env.example src/db/update-ticket-class-days.js",
 		"dev": "nodemon --exec \"node --env-file-if-exists=.env --env-file=.env.example\" server.js",
 		"reset": "node restore.js 3000 3001",
 		"start": "node --env-file-if-exists=.env --env-file=.env.example server.js",
