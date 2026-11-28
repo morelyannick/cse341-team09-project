@@ -76,6 +76,67 @@ describe('GET /api/trains', () => {
     expect(responseTooLarge.body.errors[0].field).toBe('limit');
   });
 
+  test('filters trains by powerSource', async () => {
+    const response = await request(app).get('/api/trains?powerSource=Diesel');
+    expect(response.status).toBe(200);
+    expect(response.body.trains.length).toBeGreaterThan(0);
+    response.body.trains.forEach((t) => {
+      expect(t.powerSource).toBe('Diesel');
+    });
+    expect(response.body.pagination.totalItems).toBe(response.body.trains.length);
+  });
+
+  test('searches trains by keyword q across name and description', async () => {
+    const response = await request(app).get('/api/trains?q=snow');
+    expect(response.status).toBe(200);
+    expect(response.body.trains.length).toBe(1);
+    expect(response.body.trains[0].name).toContain('KiHa 261');
+    expect(response.body.pagination.totalItems).toBe(1);
+  });
+
+  test('sorts trains by maxSpeedKmh descending', async () => {
+    const response = await request(app).get('/api/trains?sort=maxSpeedKmh&order=desc');
+    expect(response.status).toBe(200);
+    const speeds = response.body.trains.map((t) => t.maxSpeedKmh);
+    for (let i = 1; i < speeds.length; i += 1) {
+      expect(speeds[i - 1]).toBeGreaterThanOrEqual(speeds[i]);
+    }
+  });
+
+  test('combines search, filtering, sorting, and pagination correctly', async () => {
+    const response = await request(app).get('/api/trains?powerSource=Electric&sort=name&order=asc&page=1&limit=1');
+    expect(response.status).toBe(200);
+    expect(response.body.trains).toHaveLength(1);
+    expect(response.body.trains[0].powerSource).toBe('Electric');
+    expect(response.body.pagination.totalItems).toBe(2);
+    expect(response.body.pagination.totalPages).toBe(2);
+    expect(response.body.pagination.hasNextPage).toBe(true);
+  });
+
+  test('returns 400 Bad Request for unsupported powerSource', async () => {
+    const response = await request(app).get('/api/trains?powerSource=Nuclear');
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('errors');
+    expect(response.body.errors[0].field).toBe('powerSource');
+  });
+
+  test('returns 400 Bad Request for unsupported sort field or order', async () => {
+    const responseSort = await request(app).get('/api/trains?sort=color');
+    expect(responseSort.status).toBe(400);
+    expect(responseSort.body.errors[0].field).toBe('sort');
+
+    const responseOrder = await request(app).get('/api/trains?order=sideways');
+    expect(responseOrder.status).toBe(400);
+    expect(responseOrder.body.errors[0].field).toBe('order');
+  });
+
+  test('returns 400 Bad Request for query q exceeding 100 characters', async () => {
+    const longQuery = 'a'.repeat(101);
+    const response = await request(app).get(`/api/trains?q=${longQuery}`);
+    expect(response.status).toBe(400);
+    expect(response.body.errors[0].field).toBe('q');
+  });
+
   test('returns the trains from the starter data', async () => {
     const response = await request(app).get('/api/trains');
 

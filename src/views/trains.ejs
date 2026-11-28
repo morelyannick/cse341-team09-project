@@ -8,6 +8,33 @@
 </section>
 
 <section class="trains-catalog">
+    <div class="trains-toolbar">
+        <div class="toolbar-group search-group">
+            <label for="trains-search">Search Trains</label>
+            <input type="search" id="trains-search" placeholder="Search by name, description..." autocomplete="off">
+        </div>
+        <div class="toolbar-group">
+            <label for="trains-power-filter">Power Source</label>
+            <select id="trains-power-filter">
+                <option value="">All Power Sources</option>
+                <option value="Electric">Electric</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Steam">Steam</option>
+            </select>
+        </div>
+        <div class="toolbar-group">
+            <label for="trains-sort">Sort By</label>
+            <select id="trains-sort">
+                <option value="name:asc">Name (A-Z)</option>
+                <option value="name:desc">Name (Z-A)</option>
+                <option value="maxSpeedKmh:desc">Top Speed (Fastest)</option>
+                <option value="maxSpeedKmh:asc">Top Speed (Slowest)</option>
+                <option value="capacity:desc">Capacity (Highest)</option>
+                <option value="capacity:asc">Capacity (Lowest)</option>
+            </select>
+        </div>
+    </div>
+
     <div class="trains-state" id="trains-loading">Loading trains...</div>
     <div class="trains-state trains-error" id="trains-error" hidden></div>
 
