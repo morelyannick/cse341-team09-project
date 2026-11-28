@@ -1,7 +1,18 @@
 import { Router } from 'express';
-import railTripsRouter from './trips.js';
-import { trainsApi, trainsPage } from './trains.js';
-import { homePage, aboutPage, testErrorPage } from './index.js';
+import { Router } from 'express';
+
+import { homePage, aboutPage, testErrorPage } from '../controllers/pages.js';
+import {
+    bookingConfirmationPage,
+    bookingPage,
+    processBookingRequest
+} from '../controllers/bookings.js';
+import {
+    tripDetailsPage,
+    tripListPage,
+    trainsPage
+} from '../controllers/trip-pages.js';
+
 import {
     registerPage,
     processRegister,
@@ -10,36 +21,39 @@ import {
     logout,
     adminDashboardPage
 } from '../controllers/auth.js';
+
 import { requirePageRole } from '../middleware/auth.js';
 
 const router = Router();
 
-// Home page
+// General pages
 router.get('/', homePage);
-
-// About page
 router.get('/about', aboutPage);
-
-// Trains page
 router.get('/trains', trainsPage);
+router.get('/500', testErrorPage);
 
-// Trains API
-router.get('/api/trains', trainsApi);
+// Trip pages
+router.get('/trips', tripListPage);
+router.get('/trips/:tripId', tripDetailsPage);
 
-// Rail trips
-router.use('/trips', railTripsRouter);
+// Booking pages
+router.get('/trips/booking/:scheduleId', bookingPage);
+router.post('/trips/book', processBookingRequest);
+router.get('/trips/confirmation/:bookingId', bookingConfirmationPage);
 
-// Auth routes
+// Booking administration
+router.get('/bookings-admin', (req, res) =>
+    res.render('bookings', { title: 'Bookings Administration' })
+);
+
+// Authentication
 router.get('/register', registerPage);
 router.post('/register', processRegister);
 router.get('/login', loginPage);
 router.post('/login', processLogin);
 router.get('/logout', logout);
 
-// Protected Admin Dashboard
+// Protected admin dashboard
 router.get('/admin/dashboard', requirePageRole('admin'), adminDashboardPage);
-
-// Test 500 error page
-router.get('/500', testErrorPage);
 
 export default router;

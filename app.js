@@ -3,9 +3,11 @@ import Path from 'path';
 import { fileURLToPath } from 'url';
 import session from 'express-session';
 import pkg from './package.json' with { type: 'json' };
+import swaggerUi from 'swagger-ui-express';
 import globalMiddleware from './src/middleware/global.js';
 import { loadSessionUser } from './src/middleware/auth.js';
 import routes from './src/routes/router.js';
+import swaggerSpecs from './src/swagger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = Path.dirname(__filename);
@@ -44,6 +46,7 @@ app.use(
 app.use(loadSessionUser);
 
 app.use(globalMiddleware);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use('/', routes);
 
 // Catch requests that did not match a route.
@@ -56,6 +59,9 @@ app.use((req, res, next) => {
 // Render the appropriate error page.
 app.use((err, req, res, next) => {
     const status = err.status || 500;
+    if (req.path.startsWith('/api/')) {
+        return res.status(status).json({ error: status === 500 ? 'Internal Server Error' : err.message });
+    }
     const template = status === 404 ? '404' : '500';
     const context = {
         title: status === 404 ? 'Page Not Found' : 'Server Error',

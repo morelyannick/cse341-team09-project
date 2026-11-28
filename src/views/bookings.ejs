@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<section class="bookings-admin">
+    <h1><%= title %></h1>
+    <p id="bookings-loading" role="status">Loading bookings…</p>
+    <p id="bookings-error" role="alert" hidden></p>
+    <p id="bookings-empty" hidden>No bookings have been made yet.</p>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>Trip</th>
+                    <th>Schedule</th>
+                    <th>Day</th>
+                    <th>Ticket class</th>
+                    <th>Passengers</th>
+                    <th>Booked on</th>
+                </tr>
+            </thead>
+            <tbody id="bookings-table-body"></tbody>
+        </table>
+    </div>
+</section>
+
+<script src="/js/bookings.js" defer></script>
+<%- include('partials/footer') %>
