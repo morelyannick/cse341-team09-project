@@ -102,10 +102,53 @@ router.get('/api/bookings', getAllBookings);
  * @openapi
  * /api/trains:
  *   get:
- *     summary: List all trains
+ *     summary: List all trains with pagination, search, filtering, and sorting
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         description: Keyword text search across train name, description, bestFor, and operator
+ *       - in: query
+ *         name: powerSource
+ *         schema:
+ *           type: string
+ *           enum: [Electric, Diesel, Steam]
+ *         description: Filter trains by propulsion technology
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           enum: [name, maxSpeedKmh, capacity]
+ *           default: name
+ *         description: Field to sort trains by
+ *       - in: query
+ *         name: order
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: asc
+ *         description: Sort direction (ascending or descending)
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *           minimum: 1
+ *         description: 1-based page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *           minimum: 1
+ *           maximum: 50
+ *         description: Number of trains to return per page
  *     responses:
  *       200:
- *         description: Trains returned successfully
+ *         description: Filtered and paginated trains returned successfully
+ *       400:
+ *         description: Invalid query parameters
  */
 router.get('/api/trains', getAllTrains);
 

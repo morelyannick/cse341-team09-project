@@ -121,6 +121,89 @@
     }
 }
 
+.trains-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: flex-end;
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
+    background: #ffffff;
+    border: 1px solid #dce6ff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+
+    .toolbar-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        min-width: 180px;
+
+        label {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--clr-text-secondary);
+        }
+
+        input,
+        select {
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid #cfdbf7;
+            border-radius: var(--radius-md);
+            background: #fbfdff;
+            color: var(--clr-text-primary);
+            font-size: var(--font-size-md);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+
+            &:focus {
+                border-color: #557ee6;
+                box-shadow: 0 0 0 3px rgba(85, 126, 230, 0.2);
+            }
+        }
+    }
+
+    .search-group {
+        flex: 1 1 280px;
+    }
+}
+
+.trains-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding: var(--space-md);
+
+    .pagination-btn {
+        padding: var(--space-sm) var(--space-md);
+        border: 1px solid #b8c7ef;
+        border-radius: var(--radius-md);
+        background: #ffffff;
+        color: var(--clr-text-primary);
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+
+        &:hover:not(:disabled) {
+            background-color: #eef3ff;
+            border-color: #8da6e3;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    .pagination-info {
+        font-size: var(--font-size-sm);
+        color: var(--clr-text-secondary);
+        font-weight: 500;
+    }
+}
+
 @media (min-width: 768px) {
     .trains-catalog {
         .trains-grid {
