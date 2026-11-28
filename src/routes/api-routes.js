@@ -102,10 +102,28 @@ router.get('/api/bookings', getAllBookings);
  * @openapi
  * /api/trains:
  *   get:
- *     summary: List all trains
+ *     summary: List all trains with pagination
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *           minimum: 1
+ *         description: 1-based page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *           minimum: 1
+ *           maximum: 50
+ *         description: Number of trains to return per page
  *     responses:
  *       200:
- *         description: Trains returned successfully
+ *         description: Paginated trains returned successfully
+ *       400:
+ *         description: Invalid pagination parameters
  */
 router.get('/api/trains', getAllTrains);
 

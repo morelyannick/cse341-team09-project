@@ -13,6 +13,12 @@
 
     <div class="trains-grid" id="trains-list"></div>
 
+    <nav class="trains-pagination" id="trains-pagination" aria-label="Trains pagination" hidden>
+        <button type="button" class="pagination-btn" id="trains-prev-btn" disabled>&larr; Previous</button>
+        <span class="pagination-info" id="trains-page-info">Page 1 of 1</span>
+        <button type="button" class="pagination-btn" id="trains-next-btn" disabled>Next &rarr;</button>
+    </nav>
+
     <template id="train-card-template">
         <article class="train-card">
             <div class="train-image-wrap">
