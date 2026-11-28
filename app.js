@@ -1,9 +1,11 @@
 import express from 'express';
 import Path from 'path';
 import { fileURLToPath } from 'url';
+import session from 'express-session';
 import pkg from './package.json' with { type: 'json' };
 import swaggerUi from 'swagger-ui-express';
 import globalMiddleware from './src/middleware/global.js';
+import { loadSessionUser } from './src/middleware/auth.js';
 import routes from './src/routes/router.js';
 import swaggerSpecs from './src/swagger.js';
 
@@ -26,6 +28,22 @@ app.set('views', Path.join(__dirname, 'src/views'));
 // Parse JSON and URL-encoded request bodies.
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Set up session management
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || 'kizuna-rail-secure-session-secret-key-2026',
+        resave: false,
+        saveUninitialized: false,
+        rolling: true,
+        cookie: {
+            maxAge: 60 * 60 * 1000
+        }
+    })
+);
+
+// Load session user into req.user and res.locals.user
+app.use(loadSessionUser);
 
 app.use(globalMiddleware);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
