@@ -1,0 +1,23 @@
+
+<%- include('../partials/header') %>
+
+<section class="admin-users-container" style="max-width: 1100px; margin: 0 auto; padding: 30px 20px;">
+    <h1>User Administration</h1>
+
+    <p>
+        View and manage user accounts. Administrators can manage all users,
+        while customers can manage their own account.
+    </p>
+
+    <div id="users-message" role="status" aria-live="polite"></div>
+
+    <div id="users-loading">
+        Loading users...
+    </div>
+
+    <div id="users-list" aria-live="polite"></div>
+</section>
+
+<script src="/js/users.js" defer></script>
+
+<%- include('../partials/footer') %>

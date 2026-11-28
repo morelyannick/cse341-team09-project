@@ -4,6 +4,8 @@ import { getSchedulesForTrip, getSchedulesForTripAndMonth } from '../controllers
 import { getAllTrips, getTripById } from '../controllers/trips.js';
 import { getAllTrains } from '../controllers/trains.js';
 import swaggerSpecs from '../swagger.js';
+import { getUsers, updateUser, deleteUser } from '../controllers/users.js';
+import { requireApiLogin } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -110,5 +112,10 @@ router.get('/api/bookings', getAllBookings);
 router.get('/api/trains', getAllTrains);
 
 router.get('/api/openapi.json', (req, res) => res.json(swaggerSpecs));
+
+// User administration
+router.get('/api/users', requireApiLogin, getUsers);
+router.patch('/api/users/:id', requireApiLogin, updateUser);
+router.delete('/api/users/:id', requireApiLogin, deleteUser);
 
 export default router;
