@@ -11,3 +11,7 @@ export async function getAllBookings() {
 export async function getBookingById(id) {
   return Booking.findOne({ id }).lean();
 }
+
+export async function countBookingsForTrip(tripId) {
+  return Booking.countDocuments({ tripId });
+}

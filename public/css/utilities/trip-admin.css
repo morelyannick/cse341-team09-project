@@ -1,0 +1,167 @@
+/* Trip admin page (Feature Set 5) */
+.trip-admin .trip-admin-status {
+    font-weight: 600;
+}
+
+.trip-admin .trip-admin-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+}
+
+.trip-admin .trip-admin-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    background: var(--clr-surface);
+}
+
+.trip-admin .trip-admin-row h2 {
+    margin: 0 0 4px;
+    font-size: var(--font-size-lg);
+}
+
+.trip-admin .trip-admin-row p {
+    margin: 2px 0;
+    font-size: var(--font-size-sm);
+}
+
+.trip-admin .trip-admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.trip-admin button {
+    padding: 6px 14px;
+    border: 1px solid var(--clr-border);
+    border-radius: 6px;
+    background: var(--clr-surface);
+    color: var(--clr-text-primary);
+    cursor: pointer;
+    font: inherit;
+    box-shadow: none;
+}
+
+.trip-admin button:hover {
+    background: var(--clr-surface-alt);
+}
+
+.trip-admin .trip-admin-delete {
+    color: #a12a2a;
+    border-color: #e0b4b4;
+}
+
+.trip-admin #trip-editor-save {
+    background: #2d5a4c;
+    color: #fff;
+    border-color: #2d5a4c;
+}
+
+.trip-admin #trip-editor-save:disabled {
+    opacity: 0.6;
+}
+
+.trip-admin .trip-editor {
+    /* The site reset sets margin: 0 on everything; auto margins re-center the dialog. */
+    margin: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: min(720px, 95vw);
+    border: 1px solid var(--clr-border);
+    border-radius: 10px;
+    padding: var(--space-md) var(--space-lg);
+}
+
+.trip-admin .trip-editor::backdrop {
+    background: rgb(0 0 0 / 0.4);
+}
+
+.trip-admin .trip-editor form {
+    display: grid;
+    gap: 12px;
+}
+
+.trip-admin .trip-editor label {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+}
+
+.trip-admin .trip-editor input,
+.trip-admin .trip-editor select,
+.trip-admin .trip-editor textarea {
+    width: 100%;
+    max-width: none;
+    font: inherit;
+    font-weight: 400;
+    padding: 6px 8px;
+    border: 1px solid var(--clr-border);
+    border-radius: 6px;
+}
+
+.trip-admin .trip-editor-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.trip-admin .trip-editor fieldset {
+    border: 1px solid var(--clr-border);
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.trip-admin .trip-editor-months {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+}
+
+.trip-admin .trip-editor-months input,
+.trip-admin .trip-editor-schedules input {
+    width: auto;
+}
+
+.trip-admin .trip-editor-months label,
+.trip-admin .trip-editor-schedules label {
+    display: flex;
+    width: auto;
+    align-items: center;
+    gap: 6px;
+    font-weight: 400;
+}
+
+.trip-admin .trip-editor-schedules {
+    display: grid;
+    gap: 4px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.trip-admin .trip-editor-hint {
+    margin: 0 0 6px;
+    font-size: var(--font-size-sm);
+}
+
+.trip-admin .trip-editor-errors {
+    margin: 0;
+    padding: 8px 12px 8px 28px;
+    border: 1px solid #e0b4b4;
+    border-radius: 6px;
+    background: #fdf2f2;
+    color: #a12a2a;
+}
+
+.trip-admin .trip-editor-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}

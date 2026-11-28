@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+<section class="trip-admin">
+    <h1><%= title %></h1>
+    <p>Edit or delete scenic trips. Changes are saved through the trips API and the list updates without reloading the page.</p>
+    <p><a href="/admin/dashboard">&larr; Back to the Admin Dashboard</a></p>
+
+    <p id="trip-admin-status" class="trip-admin-status" role="status" aria-live="polite">Loading trips…</p>
+    <ul id="trip-admin-list" class="trip-admin-list"></ul>
+
+    <template id="trip-admin-row">
+        <li class="trip-admin-row">
+            <div class="trip-admin-info">
+                <h2 class="trip-admin-name"></h2>
+                <p class="trip-admin-meta"></p>
+                <p class="trip-admin-route"></p>
+                <p class="trip-admin-schedules"></p>
+            </div>
+            <div class="trip-admin-actions">
+                <button type="button" class="trip-admin-edit">Edit</button>
+                <button type="button" class="trip-admin-delete">Delete</button>
+            </div>
+        </li>
+    </template>
+
+    <dialog id="trip-editor" class="trip-editor" aria-labelledby="trip-editor-title">
+        <form id="trip-editor-form" method="dialog" novalidate>
+            <h2 id="trip-editor-title">Edit trip</h2>
+            <ul id="trip-editor-errors" class="trip-editor-errors" role="alert" hidden></ul>
+
+            <label>Name <input name="name" required></label>
+            <label>Description <textarea name="description" rows="3" required></textarea></label>
+            <div class="trip-editor-row">
+                <label>Region <input name="region" list="trip-editor-regions" required></label>
+                <label>Best season
+                    <select name="bestSeason">
+                        <option value="spring">Spring</option>
+                        <option value="summer">Summer</option>
+                        <option value="autumn">Autumn</option>
+                        <option value="winter">Winter</option>
+                    </select>
+                </label>
+            </div>
+            <datalist id="trip-editor-regions"></datalist>
+            <div class="trip-editor-row">
+                <label>Start station <select name="startStation" required></select></label>
+                <label>End station <select name="endStation" required></select></label>
+            </div>
+            <div class="trip-editor-row">
+                <label>Duration <input name="duration" placeholder="4.5 hours" required></label>
+                <label>Distance (km) <input name="distance" type="number" min="0" step="1" required></label>
+            </div>
+            <label>Highlights (one per line) <textarea name="highlights" rows="3"></textarea></label>
+
+            <fieldset>
+                <legend>Operating months</legend>
+                <div id="trip-editor-months" class="trip-editor-months"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Schedules</legend>
+                <p class="trip-editor-hint">Schedules already on this trip stay on it. Check another trip's schedule to move it to this trip.</p>
+                <div id="trip-editor-schedules" class="trip-editor-schedules"></div>
+            </fieldset>
+
+            <div class="trip-editor-buttons">
+                <button type="button" id="trip-editor-cancel">Cancel</button>
+                <button type="submit" id="trip-editor-save">Save changes</button>
+            </div>
+        </form>
+    </dialog>
+</section>
+<script src="/js/trip-admin.js" defer></script>
+<%- include('../partials/footer') %>
