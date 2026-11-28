@@ -1,59 +1,10 @@
 import { Router } from 'express';
-import { Router } from 'express';
-
-import { homePage, aboutPage, testErrorPage } from '../controllers/pages.js';
-import {
-    bookingConfirmationPage,
-    bookingPage,
-    processBookingRequest
-} from '../controllers/bookings.js';
-import {
-    tripDetailsPage,
-    tripListPage,
-    trainsPage
-} from '../controllers/trip-pages.js';
-
-import {
-    registerPage,
-    processRegister,
-    loginPage,
-    processLogin,
-    logout,
-    adminDashboardPage
-} from '../controllers/auth.js';
-
-import { requirePageRole } from '../middleware/auth.js';
+import apiRoutes from './api-routes.js';
+import ejsRoutes from './ejs-routes.js';
 
 const router = Router();
 
-// General pages
-router.get('/', homePage);
-router.get('/about', aboutPage);
-router.get('/trains', trainsPage);
-router.get('/500', testErrorPage);
-
-// Trip pages
-router.get('/trips', tripListPage);
-router.get('/trips/:tripId', tripDetailsPage);
-
-// Booking pages
-router.get('/trips/booking/:scheduleId', bookingPage);
-router.post('/trips/book', processBookingRequest);
-router.get('/trips/confirmation/:bookingId', bookingConfirmationPage);
-
-// Booking administration
-router.get('/bookings-admin', (req, res) =>
-    res.render('bookings', { title: 'Bookings Administration' })
-);
-
-// Authentication
-router.get('/register', registerPage);
-router.post('/register', processRegister);
-router.get('/login', loginPage);
-router.post('/login', processLogin);
-router.get('/logout', logout);
-
-// Protected admin dashboard
-router.get('/admin/dashboard', requirePageRole('admin'), adminDashboardPage);
+router.use(apiRoutes);
+router.use(ejsRoutes);
 
 export default router;
