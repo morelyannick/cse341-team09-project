@@ -132,6 +132,67 @@ const hookUserBookings = async () => {
     }
 };
 
+const hookUserAdmin = () => {
+    const listEl = document.getElementById('users-list');
+    if (!listEl) {
+        return;
+    }
+
+    const loadingEl = document.getElementById('users-loading');
+    const errorEl = document.getElementById('users-error');
+    const emptyEl = document.getElementById('users-empty');
+    const tableEl = document.getElementById('users-table');
+    const paginationEl = document.getElementById('users-pagination');
+    const pageInfoEl = document.getElementById('users-page-info');
+    const previousButton = document.getElementById('users-previous');
+    const nextButton = document.getElementById('users-next');
+    let currentPage = 1;
+
+    const loadPage = async (page) => {
+        loadingEl.hidden = false;
+        errorEl.hidden = true;
+        previousButton.disabled = true;
+        nextButton.disabled = true;
+
+        try {
+            const response = await fetch(`/api/users?page=${page}`);
+            if (!response.ok) {
+                throw new Error(`Failed to load users (${response.status})`);
+            }
+
+            const { metadata, data } = await response.json();
+            const fragment = document.createDocumentFragment();
+            data.forEach((user) => {
+                const row = document.createElement('tr');
+                [user.displayName, user.email, user.role].forEach((value) => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value || '';
+                    row.appendChild(cell);
+                });
+                fragment.appendChild(row);
+            });
+
+            listEl.replaceChildren(fragment);
+            currentPage = metadata.page;
+            tableEl.hidden = data.length === 0;
+            emptyEl.hidden = data.length > 0;
+            paginationEl.hidden = false;
+            pageInfoEl.textContent = `Page ${metadata.page} of ${Math.max(metadata.totalPages, 1)} · ${metadata.totalItems} users`;
+            previousButton.disabled = metadata.page <= 1;
+            nextButton.disabled = metadata.page >= metadata.totalPages;
+        } catch (error) {
+            errorEl.textContent = 'Unable to load users right now. Please try again later.';
+            errorEl.hidden = false;
+        } finally {
+            loadingEl.hidden = true;
+        }
+    };
+
+    previousButton.addEventListener('click', () => loadPage(currentPage - 1));
+    nextButton.addEventListener('click', () => loadPage(currentPage + 1));
+    loadPage(currentPage);
+};
+
 const hookPasswordVisibility = () => {
     const passwordInput = document.getElementById('password');
     const toggleButton = document.querySelector('.password-toggle');
@@ -152,5 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
     hookSeasonSorter();
     hookTrainsCatalog();
     hookUserBookings();
+    hookUserAdmin();
     hookPasswordVisibility();
 });

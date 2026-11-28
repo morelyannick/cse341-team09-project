@@ -1,7 +1,26 @@
 <%- include('../partials/header') %>
 <section class="dashboard-page">
     <h1>User Admin</h1>
-    <p>User administration is ready for management tools.</p>
+    <p id="users-loading" role="status">Loading users...</p>
+    <p id="users-error" class="form-error" role="alert" hidden></p>
+    <p id="users-empty" hidden>No users found.</p>
+    <div class="user-table-wrapper">
+        <table id="users-table" aria-label="Users" hidden>
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                </tr>
+            </thead>
+            <tbody id="users-list"></tbody>
+        </table>
+    </div>
+    <nav id="users-pagination" class="pagination-controls" aria-label="User pages" hidden>
+        <button id="users-previous" type="button" disabled>Previous</button>
+        <p id="users-page-info" aria-live="polite"></p>
+        <button id="users-next" type="button" disabled>Next</button>
+    </nav>
     <p><a href="/admin/dashboard">Back to Admin Dashboard</a></p>
 </section>
 <%- include('../partials/footer') %>

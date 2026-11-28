@@ -107,4 +107,72 @@ describe('account navigation and dashboards', () => {
     const forbidden = await standardAgent.get('/admin/dashboard');
     expect(forbidden.status).toBe(403);
   });
+
+  test('serves users in sorted pages of ten to administrators only', async () => {
+    const adminAgent = request.agent(app);
+    await registerAccount(adminAgent, 'Pagination Admin', 'pagination-admin@example.com');
+    await getDb().collection('users').updateOne(
+      { email: 'pagination-admin@example.com' },
+      { $set: { role: 'admin' } }
+    );
+
+    const users = Array.from({ length: 12 }, (_, index) => ({
+      displayName: `User ${String(12 - index).padStart(2, '0')}`,
+      email: `user-${index}@example.com`,
+      passwordHash: 'not-returned',
+      role: 'user',
+      createdAt: new Date()
+    }));
+    await getDb().collection('users').insertMany(users);
+
+    const firstPage = await adminAgent.get('/api/users');
+    expect(firstPage.status).toBe(200);
+    expect(firstPage.body.metadata).toEqual({
+      page: 1,
+      limit: 10,
+      totalItems: 13,
+      totalPages: 2
+    });
+    expect(firstPage.body.data).toHaveLength(10);
+    expect(firstPage.body.data.map((user) => user.displayName)).toEqual([
+      'Pagination Admin',
+      'User 01',
+      'User 02',
+      'User 03',
+      'User 04',
+      'User 05',
+      'User 06',
+      'User 07',
+      'User 08',
+      'User 09'
+    ]);
+    expect(firstPage.body.data[0]).not.toHaveProperty('passwordHash');
+
+    const secondPage = await adminAgent.get('/api/users?page=2');
+    expect(secondPage.status).toBe(200);
+    expect(secondPage.body.metadata.page).toBe(2);
+    expect(secondPage.body.data.map((user) => user.displayName)).toEqual([
+      'User 10',
+      'User 11',
+      'User 12'
+    ]);
+
+    const forbiddenAgent = request.agent(app);
+    await registerAccount(forbiddenAgent, 'Standard User', 'standard-user@example.com');
+    const forbidden = await forbiddenAgent.get('/api/users');
+    expect(forbidden.status).toBe(403);
+  });
+
+  test('rejects invalid users API page numbers', async () => {
+    const adminAgent = request.agent(app);
+    await registerAccount(adminAgent, 'Page Admin', 'page-admin@example.com');
+    await getDb().collection('users').updateOne(
+      { email: 'page-admin@example.com' },
+      { $set: { role: 'admin' } }
+    );
+
+    const response = await adminAgent.get('/api/users?page=0');
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe('Page must be a positive integer.');
+  });
 });

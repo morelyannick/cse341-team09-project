@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
     adminDashboard,
     bookingAdminPage,
+    userAdminApi,
     userAdminPage,
     userBookingsApi,
     userDashboard
@@ -14,6 +15,7 @@ router.get('/dashboard', requireAuth, userDashboard);
 router.get('/admin/dashboard', requireAdmin, adminDashboard);
 router.get('/admin/bookings', requireAdmin, bookingAdminPage);
 router.get('/admin/users', requireAdmin, userAdminPage);
+router.get('/api/users', requireAdmin, userAdminApi);
 router.get('/api/bookings/me', requireAuth, userBookingsApi);
 
 export default router;
